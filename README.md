@@ -16,7 +16,6 @@ https://angular.io/docs
 https://vuejs.org/v2/guide/
 Let us know if you have any questions! If you're good to go, please send us back your project at your convenience (please upload your project to a public git repository, such as Github).
 
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
