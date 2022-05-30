@@ -1,6 +1,9 @@
 import React from 'react';
 
-function History() {
+function History({ searchHistory }) {
+
+  console.log(searchHistory);
+
   return (
     <div>
       <h3>History</h3>
