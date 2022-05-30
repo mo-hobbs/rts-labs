@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 
+import SearchResults from "./SearchResults";
+
 function SearchForm({ handleSearch }) {
 
   const [formData, setFormData] = useState("");
+  const [searchResults, setSearchResults] = useState(null);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -11,7 +14,7 @@ function SearchForm({ handleSearch }) {
     fetch(`http://hn.algolia.com/api/v1/search?query=${formData}`)
       .then((r) => r.json())
       // .then(data=>setSearchResults(data))
-      .then((data) => console.log(data));
+      .then((data) => setSearchResults(data));
     // on Submit add formData to the search History object, clear form and reset formData 
   }
 
@@ -35,6 +38,7 @@ function SearchForm({ handleSearch }) {
           className="submit"
         />
       </form>
+      {searchResults ? <SearchResults searchResults={searchResults} /> : null}
     </div>
   );
 }
