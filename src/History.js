@@ -2,7 +2,7 @@ import React from 'react';
 
 function History({ searchHistory }) {
 
-  console.log(searchHistory);
+  console.log("display search history "+ searchHistory);
 
   return (
     <div>

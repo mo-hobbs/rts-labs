@@ -2,14 +2,11 @@ import React, { useState } from "react";
 
 import SearchResults from "./SearchResults";
 
-
-
-function SearchForm({ handleSearch }) {
+function SearchForm({ addToSearchHistory }) {
   const [formData, setFormData] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [displayResults, setDisplayResults] = useState(false);
 
-  const [searchHistory, setSearchHistory] = useState({});
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -17,9 +14,11 @@ function SearchForm({ handleSearch }) {
     setFormData(formData);
     fetch(`http://hn.algolia.com/api/v1/search?query=${formData}`)
       .then((r) => r.json())
-      .then(({ hits }) => setSearchResults(hits));
+      .then(({ hits }) => {
+        console.log(hits);
+        setSearchResults(hits);
+      });
     setDisplayResults(!displayResults);
-    setSearchHistory({ ...searchHistory, [formData]: searchResults });
   }
 
   return (
@@ -38,9 +37,8 @@ function SearchForm({ handleSearch }) {
         <input type="submit" name="submit" value="Search" className="submit" />
       </form>
       <br></br>
-      <button href="/history">Search History</button>
       {displayResults ? (
-        <SearchResults searchResults={searchResults} formData={formData} />
+        <SearchResults searchResults={searchResults} formData={formData} addToSearchHistory={addToSearchHistory}/>
       ) : null}
     </div>
   );
