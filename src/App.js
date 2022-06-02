@@ -1,37 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
 
-import { Routes, Route } from "react-router-dom";
-import './App.css';
+import { Routes, Route, Link } from "react-router-dom";
+import "./App.css";
 
 import Home from "./Home";
-import SearchForm from './SearchForm';
-import SearchResults from "./SearchResults";
-import History from './History';
+import SearchForm from "./SearchForm";
+import History from "./History";
 
 function App() {
 
-  const [showSearchResults, setShowSearchResults] = useState(false);
-  const [searchResults, setSearchResults] = useState("");
   const [searchHistory, setSearchHistory] = useState([]);
 
+  // function handleSearch(formData, hitsFromSearch) {
+    //   console.log("search term "+ formData);
+    // };
+    
+    function addToSearchHistory(searchResults) {
+      setSearchHistory([...searchHistory, searchResults]);
 
-  function handleSearch(searchText) {
-    setSearchResults(searchText);
-    setSearchHistory([...searchHistory, searchText])
-    setShowSearchResults(!showSearchResults);
-  };
-
+  }
 
   return (
     <div className="App">
-      <header className="App-header">
+      <nav className="topnav">
+        <Link to="/">Home</Link>
+
+        <Link to="/search">Search</Link>
+
+        <Link to="/history">History</Link>
+      </nav>
       <h1>Welcome to RTS Labs | Hacker News Search App</h1>
+
       <Routes>
-      <Route path="/" element={<Home />} />
-        <Route path="search" element={<SearchForm handleSearch={handleSearch} />} />
-        <Route path="history" element={<History searchResults={searchResults} />} />
+        <Route exact path="/" element={<Home />} />
+        <Route
+          path="search"
+          element={<SearchForm addToSearchHistory={addToSearchHistory} />}
+        />
+        <Route path="history" element={<History searchHistory={searchHistory}   />} />
       </Routes>
-      </header>
     </div>
   );
 }

@@ -12,8 +12,8 @@ function Home() {
       </p>
 
       <p>
-        <Link to="/history">Click Here</Link> to see a list of your past
-        searches
+        <Link to="/history">Click Here</Link> to see a list of your
+        search history
       </p>
     </div>
   );

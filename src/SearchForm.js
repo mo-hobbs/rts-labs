@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 
-function SearchForm({ handleSearch }) {
+import SearchResults from "./SearchResults";
 
+function SearchForm({ addToSearchHistory }) {
   const [formData, setFormData] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [displayResults, setDisplayResults] = useState(false);
+
 
   function handleSubmit(e) {
     e.preventDefault();
     console.log(formData);
-    handleSearch(formData);
+    setFormData(formData);
     fetch(`http://hn.algolia.com/api/v1/search?query=${formData}`)
       .then((r) => r.json())
-      // .then(data=>setSearchResults(data))
-      .then((data) => console.log(data));
-    // on Submit add formData to the search History object, clear form and reset formData 
+      .then(({ hits }) => {
+        console.log(hits);
+        setSearchResults(hits);
+      });
+    setDisplayResults(!displayResults);
   }
 
   return (
@@ -22,19 +28,18 @@ function SearchForm({ handleSearch }) {
         <input
           type="text"
           name="name"
-          onChange={(e)=> setFormData(e.target.value)}
+          onChange={(e) => setFormData(e.target.value)}
           value={formData.name}
           placeholder="Search term..."
           className="input-text"
         />
         <br />
-        <input
-          type="submit"
-          name="submit"
-          value="Search"
-          className="submit"
-        />
+        <input type="submit" name="submit" value="Search" className="submit" />
       </form>
+      <br></br>
+      {displayResults ? (
+        <SearchResults searchResults={searchResults} formData={formData} addToSearchHistory={addToSearchHistory}/>
+      ) : null}
     </div>
   );
 }
