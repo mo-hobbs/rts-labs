@@ -2,34 +2,24 @@ import React, { useState } from "react";
 
 import SearchResults from "./SearchResults";
 
-import algoliasearch from "algoliasearch/lite";
 
-import { Hits } from "react-instantsearch-dom/";
 
 function SearchForm({ handleSearch }) {
   const [formData, setFormData] = useState("");
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [displayResults, setDisplayResults] = useState(false);
 
-  // const client = algoliasearch(
-  //   "IZOMHRQVCI",
-  //   "712e9e54a57da9668ab5ea630d836184"
-  // );
-  // const index = client.initIndex("");
-
-  // only query string
-  // index.search(`${formData}`).then(({ hits }) => {
-  //   console.log(hits);
-  // });
+  const [searchHistory, setSearchHistory] = useState({});
 
   function handleSubmit(e) {
     e.preventDefault();
     console.log(formData);
-    // handleSearch(formData);
+    setFormData(formData);
     fetch(`http://hn.algolia.com/api/v1/search?query=${formData}`)
       .then((r) => r.json())
       .then(({ hits }) => setSearchResults(hits));
-      // .then((data) => setSearchResults(data));
-    // on Submit add formData to the search History object, clear form and reset formData
+    setDisplayResults(!displayResults);
+    setSearchHistory({ ...searchHistory, [formData]: searchResults });
   }
 
   return (
@@ -47,7 +37,11 @@ function SearchForm({ handleSearch }) {
         <br />
         <input type="submit" name="submit" value="Search" className="submit" />
       </form>
-      {searchResults ? <SearchResults searchResults={searchResults} /> : null}
+      <br></br>
+      <button href="/history">Search History</button>
+      {displayResults ? (
+        <SearchResults searchResults={searchResults} formData={formData} />
+      ) : null}
     </div>
   );
 }
