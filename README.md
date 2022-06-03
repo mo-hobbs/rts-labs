@@ -1,4 +1,10 @@
-# Hacker News Search App:
+# To start this project: 
+• clone repo
+• cd into the rts-labs folder
+• run npm update && npm start to view in browser 
+• more instructions on using Create React App located at the bottom of the README
+
+# INSTRUCTIONS for the Hacker News Search App:
 
 Using the Javascript framework of your choice, build an application that has two pages users can navigate to:
 
