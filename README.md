@@ -1,8 +1,8 @@
 # To start this project: 
-• clone repo
-• cd into the rts-labs folder
-• run npm update && npm start to view in browser 
-• more instructions on using Create React App located at the bottom of the README
+- clone repo
+- cd into the rts-labs folder
+- run npm update && npm start to view in browser 
+- more instructions on using Create React App located at the bottom of the README
 
 # INSTRUCTIONS for the Hacker News Search App:
 
