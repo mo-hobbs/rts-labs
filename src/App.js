@@ -7,18 +7,23 @@ import Home from "./Home";
 import SearchForm from "./SearchForm";
 import History from "./History";
 
+
 function App() {
 
-  const [searchHistory, setSearchHistory] = useState([]);
+  let searchHistory = [];
 
-  // function handleSearch(formData, hitsFromSearch) {
-    //   console.log("search term "+ formData);
-    // };
-    
-    function addToSearchHistory(searchResults) {
-      setSearchHistory([...searchHistory, searchResults]);
-
-  }
+  function handleSearch(news) {
+    const top20 = news.hits;
+    // top20.forEach((hit) => (  
+    //   <li>  
+    //     {hit.title}  
+    //   </li>  
+    // ))
+    // searchHistory.push([news.query]: top20)
+    // console.log(top20);
+    // setSearchHistory({...searchHistory, news});
+    // console.log(searchHistory)
+  };
 
   return (
     <div className="App">
@@ -35,10 +40,15 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route
           path="search"
-          element={<SearchForm addToSearchHistory={addToSearchHistory} />}
+          element={<SearchForm handleSearch={handleSearch} />}
         />
-        <Route path="history" element={<History searchHistory={searchHistory}   />} />
+
+        <Route
+          path="history"
+          element={<History searchHistory={searchHistory} />}
+        />
       </Routes>
+
     </div>
   );
 }

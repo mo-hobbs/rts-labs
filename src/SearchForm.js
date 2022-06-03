@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 import SearchResults from "./SearchResults";
 
-function SearchForm({ addToSearchHistory }) {
+function SearchForm({ handleSearch }) {
   const [formData, setFormData] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [displayResults, setDisplayResults] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
 
 
   function handleSubmit(e) {
@@ -14,9 +14,13 @@ function SearchForm({ addToSearchHistory }) {
     setFormData(formData);
     fetch(`http://hn.algolia.com/api/v1/search?query=${formData}`)
       .then((r) => r.json())
-      .then(({ hits }) => {
-        console.log(hits);
-        setSearchResults(hits);
+      // .then(({ hits }) => {
+      //   console.log(formData);
+      //   setSearchResults(hits);
+      // });
+      .then((news) => {
+        handleSearch(news);
+        setSearchResults(news);
       });
     setDisplayResults(!displayResults);
   }
@@ -38,7 +42,9 @@ function SearchForm({ addToSearchHistory }) {
       </form>
       <br></br>
       {displayResults ? (
-        <SearchResults searchResults={searchResults} formData={formData} addToSearchHistory={addToSearchHistory}/>
+        <SearchResults
+          searchResults={searchResults} 
+        />
       ) : null}
     </div>
   );
