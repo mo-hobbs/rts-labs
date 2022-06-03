@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
@@ -7,23 +7,12 @@ import Home from "./Home";
 import SearchForm from "./SearchForm";
 import History from "./History";
 
-
 function App() {
-
   let searchHistory = [];
 
-  function handleSearch(news) {
-    const top20 = news.hits;
-    // top20.forEach((hit) => (  
-    //   <li>  
-    //     {hit.title}  
-    //   </li>  
-    // ))
-    // searchHistory.push([news.query]: top20)
-    // console.log(top20);
-    // setSearchHistory({...searchHistory, news});
-    // console.log(searchHistory)
-  };
+  function handleSearch(searchTerm) {
+    searchHistory.push(searchTerm);
+  }
 
   return (
     <div className="App">
@@ -48,7 +37,6 @@ function App() {
           element={<History searchHistory={searchHistory} />}
         />
       </Routes>
-
     </div>
   );
 }

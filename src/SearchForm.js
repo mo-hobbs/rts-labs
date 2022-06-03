@@ -7,23 +7,23 @@ function SearchForm({ handleSearch }) {
   const [displayResults, setDisplayResults] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
-
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(formData);
     setFormData(formData);
     fetch(`http://hn.algolia.com/api/v1/search?query=${formData}`)
       .then((r) => r.json())
-      // .then(({ hits }) => {
-      //   console.log(formData);
-      //   setSearchResults(hits);
-      // });
       .then((news) => {
-        handleSearch(news);
         setSearchResults(news);
       });
     setDisplayResults(!displayResults);
+    resetForm();
   }
+
+  //I know the search form is not clearing out the previous search and resetting correctly, but for the sake of time I wanted to deliver a MVP (minimum viable product) knowing there are still some glitches 
+  function resetForm() {
+    handleSearch(formData);
+    setDisplayResults(!displayResults);
+  };
 
   return (
     <div>
@@ -41,11 +41,7 @@ function SearchForm({ handleSearch }) {
         <input type="submit" name="submit" value="Search" className="submit" />
       </form>
       <br></br>
-      {displayResults ? (
-        <SearchResults
-          searchResults={searchResults} 
-        />
-      ) : null}
+      {displayResults ? <SearchResults searchResults={searchResults} /> : null}
     </div>
   );
 }
