@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
@@ -8,16 +8,10 @@ import SearchForm from "./SearchForm";
 import History from "./History";
 
 function App() {
+  let searchHistory = [];
 
-  const [searchHistory, setSearchHistory] = useState([]);
-
-  // function handleSearch(formData, hitsFromSearch) {
-    //   console.log("search term "+ formData);
-    // };
-    
-    function addToSearchHistory(searchResults) {
-      setSearchHistory([...searchHistory, searchResults]);
-
+  function handleSearch(searchTerm) {
+    searchHistory.push(searchTerm);
   }
 
   return (
@@ -35,9 +29,13 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route
           path="search"
-          element={<SearchForm addToSearchHistory={addToSearchHistory} />}
+          element={<SearchForm handleSearch={handleSearch} />}
         />
-        <Route path="history" element={<History searchHistory={searchHistory}   />} />
+
+        <Route
+          path="history"
+          element={<History searchHistory={searchHistory} />}
+        />
       </Routes>
     </div>
   );
